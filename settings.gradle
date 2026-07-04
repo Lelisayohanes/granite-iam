@@ -1,0 +1,4 @@
+rootProject.name = 'Granite-IAM'
+
+include 'granite-iam-core'
+include 'granite-iam-web'
