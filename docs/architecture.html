@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture — Granite-IAM Documentation</title>
+    <meta name="description" content="System design overview and architecture of Granite-IAM.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ======================================================================
+     HEADER
+     ====================================================================== -->
+<header class="site-header">
+    <div class="header-inner">
+        <a href="index.html" class="header-brand">
+            <span class="brand-logo">G</span>
+            Granite-IAM
+        </a>
+
+        <nav class="header-nav">
+            <a href="index.html">Home</a>
+            <a href="architecture.html" class="active">Architecture</a>
+            <a href="modules.html">Modules</a>
+            <a href="setup.html">Setup</a>
+            <a href="api.html">API</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="https://github.com/Lelisayohanes/Granite-IAM" class="github-link" target="_blank" rel="noopener">
+                &#9733; <span>GitHub</span>
+            </a>
+            <button class="theme-toggle" aria-label="Toggle dark mode">&#9790;</button>
+            <button class="mobile-menu-toggle" aria-label="Open navigation">&#9776;</button>
+        </div>
+    </div>
+</header>
+
+<!-- ======================================================================
+     SIDEBAR
+     ====================================================================== -->
+<div class="sidebar-overlay"></div>
+<aside class="sidebar">
+    <div class="sidebar-section">
+        <div class="sidebar-heading">Getting Started</div>
+        <ul class="sidebar-nav">
+            <li><a href="index.html">&#127968; Overview</a></li>
+            <li><a href="setup.html">&#9881; Local Setup</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-heading">Reference</div>
+        <ul class="sidebar-nav">
+            <li><a href="architecture.html" class="active">&#128736; Architecture</a></li>
+            <li><a href="modules.html">&#128230; Modules</a></li>
+            <li><a href="api.html">&#128196; API Reference <span class="sidebar-badge wip">WIP</span></a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-heading">On This Page</div>
+        <ul class="sidebar-nav">
+            <li><a href="#overview">System Overview</a></li>
+            <li><a href="#layered-architecture">Layered Architecture</a></li>
+            <li><a href="#data-flow">Data Flow</a></li>
+            <li><a href="#security-model">Security Model</a></li>
+            <li><a href="#infrastructure">Infrastructure</a></li>
+        </ul>
+    </div>
+</aside>
+
+<!-- ======================================================================
+     MAIN CONTENT
+     ====================================================================== -->
+<div class="page-wrapper">
+    <main class="main-content">
+        <div class="content-container">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Architecture</h1>
+                <p class="page-subtitle">
+                    Granite-IAM follows a clean layered architecture inspired by Domain-Driven Design (DDD),
+                    enforcing strict dependency rules between modules to maintain testability and long-term maintainability.
+                </p>
+            </div>
+
+            <!-- System Overview -->
+            <h2 id="overview">System Overview</h2>
+            <p>
+                Granite-IAM is an Identity and Access Management system designed around the principle of
+                <strong>separation of concerns</strong>. Each Gradle module maps to a distinct architectural
+                layer with well-defined responsibilities and dependency boundaries.
+            </p>
+
+            <div class="alert alert-info">
+                <p>&#128161; <strong>Dependency Rule:</strong> Dependencies always point inward. The <code>core</code>
+                module has zero framework dependencies. The <code>web</code> module is the composition root that
+                wires everything together.</p>
+            </div>
+
+            <!-- Layered Architecture Diagram -->
+            <h2 id="layered-architecture">Layered Architecture</h2>
+
+            <div class="arch-diagram">
+                <div class="arch-layer" style="border-color: #818cf8;">
+                    <span class="arch-layer-label" style="color: #818cf8;">Web Layer — granite-iam-web</span>
+                    <span class="arch-box highlight">REST Controllers</span>
+                    <span class="arch-box">Spring Security</span>
+                    <span class="arch-box">OpenAPI / Swagger</span>
+                    <span class="arch-box">Actuator</span>
+                    <span class="arch-box">Request Validation</span>
+                </div>
+
+                <div class="arch-arrow">&#8595; &#8593;</div>
+
+                <div class="arch-layer" style="border-color: #22d3ee;">
+                    <span class="arch-layer-label" style="color: #22d3ee;">Application Layer — granite-iam-application</span>
+                    <span class="arch-box">Use Cases</span>
+                    <span class="arch-box">Service Orchestration</span>
+                    <span class="arch-box">DTOs</span>
+                    <span class="arch-box">Port Interfaces</span>
+                </div>
+
+                <div class="arch-arrow">&#8595; &#8593;</div>
+
+                <div class="arch-layer" style="border-color: #f59e0b;">
+                    <span class="arch-layer-label" style="color: #f59e0b;">Infrastructure Layer — granite-iam-infrastructure</span>
+                    <span class="arch-box">JPA Repositories</span>
+                    <span class="arch-box">Redis Cache</span>
+                    <span class="arch-box">Kafka Producers</span>
+                    <span class="arch-box">External APIs</span>
+                </div>
+
+                <div class="arch-arrow">&#8595; &#8593;</div>
+
+                <div class="arch-layer" style="border-color: #22c55e;">
+                    <span class="arch-layer-label" style="color: #22c55e;">Core / Domain Layer — granite-iam-core</span>
+                    <span class="arch-box highlight">Domain Entities</span>
+                    <span class="arch-box">Value Objects</span>
+                    <span class="arch-box">Domain Events</span>
+                    <span class="arch-box">Business Rules</span>
+                </div>
+            </div>
+
+            <h3>Dependency Direction</h3>
+<pre><code>granite-iam-web
+    ├── depends on → granite-iam-application
+    ├── depends on → granite-iam-infrastructure
+    └── depends on → granite-iam-core (transitive)
+
+granite-iam-application
+    └── depends on → granite-iam-core
+
+granite-iam-infrastructure
+    └── depends on → granite-iam-core
+
+granite-iam-core
+    └── (no dependencies — pure Java)</code></pre>
+
+            <!-- Data Flow -->
+            <h2 id="data-flow">Data Flow</h2>
+            <p>
+                A typical request flows through the system from the HTTP layer down to persistence
+                and back. Here's how a user registration request is processed:
+            </p>
+
+            <ol class="steps">
+                <li>
+                    <strong>HTTP Request</strong> arrives at the Web layer. The controller validates the
+                    request payload using <code>@Valid</code> annotations and maps it to a DTO.
+                </li>
+                <li>
+                    <strong>Application Service</strong> receives the DTO, orchestrates business logic, and
+                    delegates to the Core domain model for entity creation and rule enforcement.
+                </li>
+                <li>
+                    <strong>Domain Entity</strong> (<code>User</code>) is created in the Core layer with
+                    UUID-based identity, validated password hash, and immutable timestamps.
+                </li>
+                <li>
+                    <strong>Infrastructure Adapter</strong> persists the entity via a JPA repository
+                    (PostgreSQL) and optionally publishes a domain event to Kafka.
+                </li>
+                <li>
+                    <strong>Response</strong> flows back up the stack. The result is mapped to a response
+                    DTO and returned as JSON with appropriate HTTP status codes.
+                </li>
+            </ol>
+
+            <!-- Security Model -->
+            <h2 id="security-model">Security Model</h2>
+            <p>
+                Granite-IAM uses <strong>Spring Security 6</strong> configured as an OAuth2 Resource Server.
+                The security model is designed for token-based authentication with JWT.
+            </p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-title">
+                        <span class="card-icon">&#128273;</span>
+                        JWT Token Validation
+                    </div>
+                    <p>Incoming requests are validated against a configured JWT issuer. Tokens must be
+                    signed and unexpired. Claims are mapped to Spring Security authorities.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <span class="card-icon">&#128101;</span>
+                        Role-Based Access Control
+                    </div>
+                    <p>Endpoints are secured with role annotations (<code>@PreAuthorize</code>).
+                    Roles are extracted from JWT claims and enforced at the method level.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <span class="card-icon">&#128274;</span>
+                        Password Hashing
+                    </div>
+                    <p>Passwords are never stored in plain text. The <code>User</code> domain entity
+                    stores only the <code>passwordHash</code>, ensuring security at the model level.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <span class="card-icon">&#128737;</span>
+                        CORS &amp; CSRF
+                    </div>
+                    <p>Stateless JWT authentication with CSRF disabled for API endpoints.
+                    CORS is configured to allow specific trusted origins in production.</p>
+                </div>
+            </div>
+
+            <!-- Infrastructure -->
+            <h2 id="infrastructure">Infrastructure</h2>
+            <p>
+                The system relies on three primary infrastructure services, all managed via
+                <code>docker-compose.yml</code> for local development.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Role</th>
+                        <th>Configuration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>PostgreSQL</strong></td>
+                        <td>Primary relational database for user accounts, roles, and audit records</td>
+                        <td>Configured via <code>application.yaml</code> + env vars from <code>.env</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Redis</strong></td>
+                        <td>In-memory cache for sessions, token blacklisting, and rate limiting</td>
+                        <td>Reactive client via <code>spring-boot-starter-data-redis-reactive</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Apache Kafka</strong></td>
+                        <td>Event streaming for audit logs, async notifications, and domain events</td>
+                        <td>Spring Kafka auto-configuration with topic auto-creation</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-warning">
+                <p>&#9888;&#65039; <strong>Note:</strong> Kafka and Redis are currently wired in dependencies but
+                not yet fully implemented in the application layer. This is a planned feature for upcoming releases.</p>
+            </div>
+
+            <h3 id="future-plans">Future Architecture Enhancements <span class="todo-marker">&#9888; TODO</span></h3>
+            <ul>
+                <li>Implement full Kafka producer/consumer for domain events</li>
+                <li>Add Redis caching layer for user lookups and session management</li>
+                <li>Introduce event sourcing for audit trail</li>
+                <li>Add rate limiting middleware via Redis</li>
+                <li>Implement multi-tenancy support at the infrastructure layer</li>
+                <li>Add circuit breakers for external service calls</li>
+            </ul>
+
+            <!-- Prev / Next -->
+            <nav class="page-nav">
+                <a href="index.html">
+                    <span class="nav-label">&#8592; Previous</span>
+                    <span class="nav-title">Overview</span>
+                </a>
+                <a href="modules.html">
+                    <span class="nav-label">Next &#8594;</span>
+                    <span class="nav-title">Modules</span>
+                </a>
+            </nav>
+
+            <!-- Footer -->
+            <footer class="page-footer">
+                <p>Granite-IAM v1.0.0 &middot; Built with &#9829; by <a href="#">lelisay</a> &middot; <a href="https://github.com/Lelisayohanes/Granite-IAM" target="_blank" rel="noopener">GitHub</a></p>
+            </footer>
+
+        </div>
+    </main>
+</div>
+
+<script src="assets/script.js"></script>
+</body>
+</html>

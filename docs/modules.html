@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modules — Granite-IAM Documentation</title>
+    <meta name="description" content="Detailed explanation of each Granite-IAM module.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ======================================================================
+     HEADER
+     ====================================================================== -->
+<header class="site-header">
+    <div class="header-inner">
+        <a href="index.html" class="header-brand">
+            <span class="brand-logo">G</span>
+            Granite-IAM
+        </a>
+
+        <nav class="header-nav">
+            <a href="index.html">Home</a>
+            <a href="architecture.html">Architecture</a>
+            <a href="modules.html" class="active">Modules</a>
+            <a href="setup.html">Setup</a>
+            <a href="api.html">API</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="https://github.com/Lelisayohanes/Granite-IAM" class="github-link" target="_blank" rel="noopener">
+                &#9733; <span>GitHub</span>
+            </a>
+            <button class="theme-toggle" aria-label="Toggle dark mode">&#9790;</button>
+            <button class="mobile-menu-toggle" aria-label="Open navigation">&#9776;</button>
+        </div>
+    </div>
+</header>
+
+<!-- ======================================================================
+     SIDEBAR
+     ====================================================================== -->
+<div class="sidebar-overlay"></div>
+<aside class="sidebar">
+    <div class="sidebar-section">
+        <div class="sidebar-heading">Getting Started</div>
+        <ul class="sidebar-nav">
+            <li><a href="index.html">&#127968; Overview</a></li>
+            <li><a href="setup.html">&#9881; Local Setup</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-heading">Reference</div>
+        <ul class="sidebar-nav">
+            <li><a href="architecture.html">&#128736; Architecture</a></li>
+            <li><a href="modules.html" class="active">&#128230; Modules</a></li>
+            <li><a href="api.html">&#128196; API Reference <span class="sidebar-badge wip">WIP</span></a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-heading">On This Page</div>
+        <ul class="sidebar-nav">
+            <li><a href="#core">granite-iam-core</a></li>
+            <li><a href="#application">granite-iam-application</a></li>
+            <li><a href="#infrastructure">granite-iam-infrastructure</a></li>
+            <li><a href="#web">granite-iam-web</a></li>
+        </ul>
+    </div>
+</aside>
+
+<!-- ======================================================================
+     MAIN CONTENT
+     ====================================================================== -->
+<div class="page-wrapper">
+    <main class="main-content">
+        <div class="content-container">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Modules</h1>
+                <p class="page-subtitle">
+                    Granite-IAM is organized as a Gradle multi-module project. Each module represents
+                    a distinct architectural layer with specific responsibilities, dependencies, and
+                    testing strategies.
+                </p>
+            </div>
+
+            <!-- Module Overview Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>Layer</th>
+                        <th>Dependencies</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>granite-iam-core</code></td>
+                        <td>Domain</td>
+                        <td>None (pure Java)</td>
+                        <td><span class="tag tag-success">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>granite-iam-application</code></td>
+                        <td>Application</td>
+                        <td>core, Jakarta Validation</td>
+                        <td><span class="tag tag-warning">In Progress</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>granite-iam-infrastructure</code></td>
+                        <td>Infrastructure</td>
+                        <td>core, Spring Boot BOM</td>
+                        <td><span class="tag tag-warning">In Progress</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>granite-iam-web</code></td>
+                        <td>Web / API</td>
+                        <td>core, infrastructure, Spring Boot</td>
+                        <td><span class="tag tag-primary">Active</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <!-- ============================================================
+                 CORE MODULE
+                 ============================================================ -->
+            <h2 id="core">granite-iam-core <span class="tag tag-success">Pure Domain</span></h2>
+
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <div class="card-title">
+                    <span class="card-icon">&#127793;</span>
+                    The Heart of the System
+                </div>
+                <p>
+                    The <code>core</code> module is the <strong>innermost layer</strong> of the architecture.
+                    It contains pure Java domain entities, value objects, and business rules with
+                    <strong>zero framework dependencies</strong>. This ensures the domain model remains
+                    portable, testable with plain JUnit, and free from infrastructure concerns.
+                </p>
+            </div>
+
+            <h3>Responsibilities</h3>
+            <ul>
+                <li>Define domain entities (<code>User</code>, and future entities like <code>Role</code>, <code>Permission</code>)</li>
+                <li>Encapsulate business rules and validation logic within entities</li>
+                <li>Provide immutable identity (UUID) and timestamp management</li>
+                <li>Define domain events for lifecycle changes</li>
+            </ul>
+
+            <h3>Current Entities</h3>
+<pre><code>// com.lelisay.graniteiam.core.domain.User
+public class User {
+    private final UUID id;
+    private String username;
+    private String passwordHash;
+    private String firstName;
+    private String lastName;
+    private boolean active;
+    private final Instant createdAt;
+    private Instant updatedAt;
+}</code></pre>
+
+            <h3>Design Principles</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-title">Immutability Where Possible</div>
+                    <p>The <code>id</code> and <code>createdAt</code> fields are final. Mutations go through
+                    well-defined setter methods that update the <code>updatedAt</code> timestamp.</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">No Framework Leakage</div>
+                    <p>No JPA annotations, no Spring beans, no Lombok. The domain model is pure Java,
+                    making it trivially testable and framework-agnostic.</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">Reconstruction Pattern</div>
+                    <p>The static <code>reconstruct()</code> method supports hydrating entities from
+                    persistence without triggering creation-side effects.</p>
+                </div>
+            </div>
+
+            <h3>Planned Additions <span class="todo-marker">&#9888; TODO</span></h3>
+            <ul>
+                <li><code>Role</code> entity with hierarchical role support</li>
+                <li><code>Permission</code> value object for fine-grained access control</li>
+                <li><code>UserCreatedEvent</code> / <code>UserUpdatedEvent</code> domain events</li>
+                <li><code>PasswordPolicy</code> value object with validation rules</li>
+                <li>Repository port interfaces (to be implemented by infrastructure)</li>
+            </ul>
+
+            <hr>
+
+            <!-- ============================================================
+                 APPLICATION MODULE
+                 ============================================================ -->
+            <h2 id="application">granite-iam-application <span class="tag tag-warning">In Progress</span></h2>
+
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <div class="card-title">
+                    <span class="card-icon">&#9881;</span>
+                    Use Case Orchestration
+                </div>
+                <p>
+                    The <code>application</code> module contains <strong>use cases</strong> (application services)
+                    that coordinate between the domain layer and external concerns. It defines
+                    <strong>port interfaces</strong> that infrastructure adapters implement, following
+                    the <em>Hexagonal Architecture</em> pattern.
+                </p>
+            </div>
+
+            <h3>Responsibilities</h3>
+            <ul>
+                <li>Orchestrate multi-step operations (e.g., create user + publish event + send email)</li>
+                <li>Define input/output DTOs and command objects</li>
+                <li>Declare port interfaces for infrastructure dependencies</li>
+                <li>Handle transaction boundaries at the use-case level</li>
+            </ul>
+
+            <h3>Dependencies</h3>
+<pre><code>// build.gradle
+dependencies {
+    implementation project(':granite-iam-core')
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+}</code></pre>
+            <p>
+                Note: Jakarta Validation is used for command object validation without pulling in
+                the full Spring framework. This keeps the application layer lightweight.
+            </p>
+
+            <h3>Planned Structure <span class="todo-marker">&#9888; TODO</span></h3>
+<pre><code>// Planned directory structure
+granite-iam-application/
+└── src/main/java/com/lelisay/graniteiam/application/
+    ├── user/
+    │   ├── CreateUserCommand.java       // Validated input DTO
+    │   ├── UserService.java             // Use case orchestrator
+    │   └── UserOutputPort.java          // Port interface
+    ├── role/
+    │   └── RoleService.java
+    └── common/
+        └── Result.java                  // Generic result wrapper</code></pre>
+
+            <hr>
+
+            <!-- ============================================================
+                 INFRASTRUCTURE MODULE
+                 ============================================================ -->
+            <h2 id="infrastructure">granite-iam-infrastructure <span class="tag tag-warning">In Progress</span></h2>
+
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <div class="card-title">
+                    <span class="card-icon">&#128424;</span>
+                    External Concerns Adapter
+                </div>
+                <p>
+                    The <code>infrastructure</code> module implements the <strong>port interfaces</strong>
+                    defined in the application layer. It handles all external integrations: database
+                    persistence (JPA/PostgreSQL), caching (Redis), messaging (Kafka), and any
+                    third-party service calls.
+                </p>
+            </div>
+
+            <h3>Responsibilities</h3>
+            <ul>
+                <li>Implement repository port interfaces using Spring Data JPA</li>
+                <li>Map between domain entities and JPA entity objects</li>
+                <li>Manage Redis cache operations for sessions and tokens</li>
+                <li>Publish domain events to Kafka topics</li>
+                <li>Handle external API integrations (email, SMS, etc.)</li>
+            </ul>
+
+            <h3>Dependencies</h3>
+<pre><code>// build.gradle
+plugins {
+    id 'java'
+    id 'io.spring.dependency-management'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:3.2.0"
+    }
+}
+
+dependencies {
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}</code></pre>
+            <p>
+                The module uses the Spring Boot BOM for dependency version management but doesn't
+                directly apply the Spring Boot plugin — it's a library consumed by the web module.
+            </p>
+
+            <h3>Planned Structure <span class="todo-marker">&#9888; TODO</span></h3>
+<pre><code>// Planned directory structure
+granite-iam-infrastructure/
+└── src/main/java/com/lelisay/graniteiam/infrastructure/
+    ├── persistence/
+    │   ├── UserJpaRepository.java       // Spring Data interface
+    │   ├── UserEntity.java              // JPA entity (mapped to DB table)
+    │   ├── UserMapper.java              // Domain ↔ JPA mapping
+    │   └── UserRepositoryImpl.java      // Port implementation
+    ├── cache/
+    │   └── RedisSessionCache.java
+    └── messaging/
+        └── KafkaEventPublisher.java</code></pre>
+
+            <hr>
+
+            <!-- ============================================================
+                 WEB MODULE
+                 ============================================================ -->
+            <h2 id="web">granite-iam-web <span class="tag tag-primary">Composition Root</span></h2>
+
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <div class="card-title">
+                    <span class="card-icon">&#127760;</span>
+                    HTTP Layer &amp; Application Entry Point
+                </div>
+                <p>
+                    The <code>web</code> module is the <strong>outermost layer</strong> and the
+                    Spring Boot application entry point. It handles HTTP concerns: REST controllers,
+                    request/response mapping, security configuration, OpenAPI documentation, and
+                    application lifecycle management.
+                </p>
+            </div>
+
+            <h3>Responsibilities</h3>
+            <ul>
+                <li>Expose REST API endpoints via <code>@RestController</code> classes</li>
+                <li>Configure Spring Security (OAuth2 resource server, JWT validation, CORS)</li>
+                <li>Map HTTP requests to application use cases</li>
+                <li>Generate OpenAPI documentation via SpringDoc</li>
+                <li>Expose Actuator health checks and Prometheus metrics</li>
+                <li>Wire all modules together as the Spring Boot composition root</li>
+            </ul>
+
+            <h3>Key Dependencies</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dependency</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>spring-boot-starter-web</code></td>
+                        <td>Embedded Tomcat, MVC framework, JSON serialization</td>
+                    </tr>
+                    <tr>
+                        <td><code>spring-boot-starter-security</code></td>
+                        <td>Authentication &amp; authorization framework</td>
+                    </tr>
+                    <tr>
+                        <td><code>spring-boot-starter-data-jpa</code></td>
+                        <td>JPA/Hibernate ORM for database access</td>
+                    </tr>
+                    <tr>
+                        <td><code>spring-boot-starter-data-redis-reactive</code></td>
+                        <td>Reactive Redis client for caching</td>
+                    </tr>
+                    <tr>
+                        <td><code>spring-kafka</code></td>
+                        <td>Apache Kafka integration for event streaming</td>
+                    </tr>
+                    <tr>
+                        <td><code>spring-boot-starter-oauth2-resource-server</code></td>
+                        <td>JWT token validation for OAuth2</td>
+                    </tr>
+                    <tr>
+                        <td><code>spring-boot-starter-validation</code></td>
+                        <td>Bean validation with Hibernate Validator</td>
+                    </tr>
+                    <tr>
+                        <td><code>spring-boot-starter-actuator</code></td>
+                        <td>Health checks, metrics, and management endpoints</td>
+                    </tr>
+                    <tr>
+                        <td><code>springdoc-openapi</code> (2.3.0)</td>
+                        <td>Auto-generated Swagger/OpenAPI documentation</td>
+                    </tr>
+                    <tr>
+                        <td><code>micrometer-registry-prometheus</code></td>
+                        <td>Prometheus metrics export</td>
+                    </tr>
+                    <tr>
+                        <td><code>postgresql</code> (runtime)</td>
+                        <td>JDBC driver for PostgreSQL</td>
+                    </tr>
+                    <tr>
+                        <td><code>spring-boot-devtools</code></td>
+                        <td>Hot reload during development</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Entry Point</h3>
+<pre><code>// com.lelisay.Granite_IAM.GraniteIamApplication
+@SpringBootApplication
+public class GraniteIamApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(GraniteIamApplication.class, args);
+    }
+}</code></pre>
+
+            <h3>Planned Structure <span class="todo-marker">&#9888; TODO</span></h3>
+<pre><code>// Planned directory structure
+granite-iam-web/
+└── src/main/java/com/lelisay/Granite_IAM/
+    ├── GraniteIamApplication.java          // Entry point ✓
+    ├── config/
+    │   ├── SecurityConfig.java             // OAuth2 + JWT setup
+    │   ├── WebConfig.java                  // CORS, converters
+    │   └── RedisConfig.java                // Cache configuration
+    ├── controller/
+    │   ├── UserController.java             // /api/v1/users
+    │   ├── AuthController.java             // /api/v1/auth
+    │   └── RoleController.java             // /api/v1/roles
+    ├── dto/
+    │   ├── request/
+    │   │   ├── CreateUserRequest.java
+    │   │   └── LoginRequest.java
+    │   └── response/
+    │       ├── UserResponse.java
+    │       └── AuthTokenResponse.java
+    └── exception/
+        └── GlobalExceptionHandler.java     // @ControllerAdvice</code></pre>
+
+            <!-- Prev / Next -->
+            <nav class="page-nav">
+                <a href="architecture.html">
+                    <span class="nav-label">&#8592; Previous</span>
+                    <span class="nav-title">Architecture</span>
+                </a>
+                <a href="setup.html">
+                    <span class="nav-label">Next &#8594;</span>
+                    <span class="nav-title">Local Setup</span>
+                </a>
+            </nav>
+
+            <!-- Footer -->
+            <footer class="page-footer">
+                <p>Granite-IAM v1.0.0 &middot; Built with &#9829; by <a href="#">lelisay</a> &middot; <a href="https://github.com/Lelisayohanes/Granite-IAM" target="_blank" rel="noopener">GitHub</a></p>
+            </footer>
+
+        </div>
+    </main>
+</div>
+
+<script src="assets/script.js"></script>
+</body>
+</html>

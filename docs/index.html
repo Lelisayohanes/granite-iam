@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Granite-IAM — Documentation</title>
+    <meta name="description" content="Granite-IAM: A modern Identity and Access Management system built with Spring Boot 3 and Java 21.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ======================================================================
+     HEADER
+     ====================================================================== -->
+<header class="site-header">
+    <div class="header-inner">
+        <a href="index.html" class="header-brand">
+            <span class="brand-logo">G</span>
+            Granite-IAM
+        </a>
+
+        <nav class="header-nav">
+            <a href="index.html" class="active">Home</a>
+            <a href="architecture.html">Architecture</a>
+            <a href="modules.html">Modules</a>
+            <a href="setup.html">Setup</a>
+            <a href="api.html">API</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="https://github.com/Lelisayohanes/Granite-IAM" class="github-link" target="_blank" rel="noopener">
+                &#9733; <span>GitHub</span>
+            </a>
+            <button class="theme-toggle" aria-label="Toggle dark mode">&#9790;</button>
+            <button class="mobile-menu-toggle" aria-label="Open navigation">&#9776;</button>
+        </div>
+    </div>
+</header>
+
+<!-- ======================================================================
+     SIDEBAR
+     ====================================================================== -->
+<div class="sidebar-overlay"></div>
+<aside class="sidebar">
+    <div class="sidebar-section">
+        <div class="sidebar-heading">Getting Started</div>
+        <ul class="sidebar-nav">
+            <li><a href="index.html" class="active">&#127968; Overview</a></li>
+            <li><a href="setup.html">&#9881; Local Setup</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-heading">Reference</div>
+        <ul class="sidebar-nav">
+            <li><a href="architecture.html">&#128736; Architecture</a></li>
+            <li><a href="modules.html">&#128230; Modules</a></li>
+            <li><a href="api.html">&#128196; API Reference <span class="sidebar-badge wip">WIP</span></a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-heading">Resources</div>
+        <ul class="sidebar-nav">
+            <li><a href="https://spring.io/projects/spring-boot" target="_blank" rel="noopener">&#127807; Spring Boot</a></li>
+            <li><a href="https://docs.gradle.org/" target="_blank" rel="noopener">&#128218; Gradle Docs</a></li>
+        </ul>
+    </div>
+</aside>
+
+<!-- ======================================================================
+     MAIN CONTENT
+     ====================================================================== -->
+<div class="page-wrapper">
+    <main class="main-content">
+        <div class="content-container">
+
+            <!-- Hero -->
+            <div class="hero">
+                <div class="version-badge">
+                    <span class="dot"></span>
+                    v1.0.0 &middot; Spring Boot 3.2.0 &middot; Java 21
+                </div>
+                <h1>Granite-IAM Documentation</h1>
+                <p class="hero-subtitle">
+                    A modern, scalable Identity and Access Management platform built with
+                    Spring Boot, PostgreSQL, Redis, and Kafka — designed for enterprise-grade
+                    security and developer experience.
+                </p>
+                <div class="hero-actions">
+                    <a href="setup.html" class="btn btn-primary">&#9889; Get Started</a>
+                    <a href="architecture.html" class="btn btn-secondary">&#128736; View Architecture</a>
+                    <a href="modules.html" class="btn btn-secondary">&#128230; Explore Modules</a>
+                </div>
+            </div>
+
+            <!-- Feature Grid -->
+            <h2>Key Features</h2>
+            <div class="card-grid">
+
+                <div class="feature-card">
+                    <div class="feature-icon">&#128274;</div>
+                    <h3>OAuth2 &amp; JWT Security</h3>
+                    <p>Built-in OAuth2 resource server with JWT token validation, supporting fine-grained role and scope-based access control.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">&#128640;</div>
+                    <h3>Event-Driven Architecture</h3>
+                    <p>Apache Kafka integration for asynchronous event processing, audit logging, and decoupled service communication.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">&#128451;</div>
+                    <h3>Multi-Layer Design</h3>
+                    <p>Clean separation of concerns with Core, Application, Infrastructure, and Web modules following DDD principles.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">&#9889;</div>
+                    <h3>Redis Caching</h3>
+                    <p>Reactive Redis integration for high-performance session management, token caching, and rate limiting.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">&#128202;</div>
+                    <h3>Observability</h3>
+                    <p>Prometheus metrics, Spring Boot Actuator health checks, and structured logging for production monitoring.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">&#128736;</div>
+                    <h3>Developer Experience</h3>
+                    <p>Hot reload with DevTools, comprehensive OpenAPI documentation via SpringDoc, and Docker Compose for local development.</p>
+                </div>
+
+            </div>
+
+            <!-- Tech Stack -->
+            <h2>Technology Stack</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Layer</th>
+                        <th>Technology</th>
+                        <th>Version</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Runtime</strong></td>
+                        <td><code>Java</code></td>
+                        <td>21</td>
+                        <td>Primary language / LTS release</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Framework</strong></td>
+                        <td><code>Spring Boot</code></td>
+                        <td>3.2.0</td>
+                        <td>Application framework</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Build</strong></td>
+                        <td><code>Gradle</code></td>
+                        <td>8.x</td>
+                        <td>Multi-module build system</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Database</strong></td>
+                        <td><code>PostgreSQL</code></td>
+                        <td>Latest</td>
+                        <td>Primary data store (via JPA)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cache</strong></td>
+                        <td><code>Redis</code></td>
+                        <td>Latest</td>
+                        <td>Reactive caching &amp; sessions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Messaging</strong></td>
+                        <td><code>Apache Kafka</code></td>
+                        <td>Latest</td>
+                        <td>Event streaming</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Security</strong></td>
+                        <td><code>Spring Security</code></td>
+                        <td>6.x</td>
+                        <td>OAuth2 + JWT resource server</td>
+                    </tr>
+                    <tr>
+                        <td><strong>API Docs</strong></td>
+                        <td><code>SpringDoc OpenAPI</code></td>
+                        <td>2.3.0</td>
+                        <td>Auto-generated API documentation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Observability</strong></td>
+                        <td><code>Micrometer + Prometheus</code></td>
+                        <td>—</td>
+                        <td>Metrics collection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Containers</strong></td>
+                        <td><code>Docker Compose</code></td>
+                        <td>—</td>
+                        <td>Local development infrastructure</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Quick Start -->
+            <h2>Quick Start</h2>
+            <div class="alert alert-info">
+                <p>&#128161; For the complete setup guide including Docker configuration and environment variables,
+                see <a href="setup.html"><strong>Local Setup</strong></a>.</p>
+            </div>
+<pre><code># Clone the repository
+git clone https://github.com/Lelisayohanes/Granite-IAM.git
+cd Granite-IAM
+
+# Copy and configure environment variables
+cp .env.example .env
+
+# Start infrastructure services (PostgreSQL, Redis, Kafka)
+docker-compose up -d
+
+# Build and run the application
+./gradlew :granite-iam-web:bootRun</code></pre>
+
+            <!-- Project Structure Overview -->
+            <h2>Project Structure</h2>
+<pre><code>Granite-IAM/
+├── granite-iam-core/             # Pure domain model — no framework dependencies
+│   └── User.java                 # Domain entities &amp; value objects
+├── granite-iam-application/      # Use cases &amp; business logic
+├── granite-iam-infrastructure/   # Persistence, messaging, external integrations
+├── granite-iam-web/              # HTTP layer — controllers, security, Spring Boot entry point
+│   └── GraniteIamApplication.java
+├── docs/                         # This documentation site
+├── docker-compose.yml            # Local infrastructure services
+└── build.gradle                  # Root Gradle build (multi-module)</code></pre>
+
+            <div class="alert alert-warning">
+                <p>&#9888;&#65039; This project is actively under development. API endpoints and module boundaries
+                may change. Check back for updates or watch the GitHub repository.</p>
+            </div>
+
+            <!-- Prev / Next -->
+            <nav class="page-nav">
+                <a href="index.html">
+                    <span class="nav-label">&#8592; Current</span>
+                    <span class="nav-title">Overview</span>
+                </a>
+                <a href="architecture.html">
+                    <span class="nav-label">Next &#8594;</span>
+                    <span class="nav-title">Architecture</span>
+                </a>
+            </nav>
+
+            <!-- Footer -->
+            <footer class="page-footer">
+                <p>Granite-IAM v1.0.0 &middot; Built with &#9829; by <a href="#">lelisay</a> &middot; <a href="https://github.com/Lelisayohanes/Granite-IAM" target="_blank" rel="noopener">GitHub</a></p>
+            </footer>
+
+        </div>
+    </main>
+</div>
+
+<script src="assets/script.js"></script>
+</body>
+</html>

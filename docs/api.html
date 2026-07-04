@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference — Granite-IAM Documentation</title>
+    <meta name="description" content="API reference documentation for Granite-IAM.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ======================================================================
+     HEADER
+     ====================================================================== -->
+<header class="site-header">
+    <div class="header-inner">
+        <a href="index.html" class="header-brand">
+            <span class="brand-logo">G</span>
+            Granite-IAM
+        </a>
+
+        <nav class="header-nav">
+            <a href="index.html">Home</a>
+            <a href="architecture.html">Architecture</a>
+            <a href="modules.html">Modules</a>
+            <a href="setup.html">Setup</a>
+            <a href="api.html" class="active">API</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="https://github.com/your-org/Granite-IAM" class="github-link" target="_blank" rel="noopener">
+                &#9733; <span>GitHub</span>
+            </a>
+            <button class="theme-toggle" aria-label="Toggle dark mode">&#9790;</button>
+            <button class="mobile-menu-toggle" aria-label="Open navigation">&#9776;</button>
+        </div>
+    </div>
+</header>
+
+<!-- ======================================================================
+     SIDEBAR
+     ====================================================================== -->
+<div class="sidebar-overlay"></div>
+<aside class="sidebar">
+    <div class="sidebar-section">
+        <div class="sidebar-heading">Getting Started</div>
+        <ul class="sidebar-nav">
+            <li><a href="index.html">&#127968; Overview</a></li>
+            <li><a href="setup.html">&#9881; Local Setup</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-heading">Reference</div>
+        <ul class="sidebar-nav">
+            <li><a href="architecture.html">&#128736; Architecture</a></li>
+            <li><a href="modules.html">&#128230; Modules</a></li>
+            <li><a href="api.html" class="active">&#128196; API Reference <span class="sidebar-badge wip">WIP</span></a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-heading">On This Page</div>
+        <ul class="sidebar-nav">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#authentication">Authentication</a></li>
+            <li><a href="#users">Users API</a></li>
+            <li><a href="#roles">Roles API</a></li>
+            <li><a href="#errors">Error Handling</a></li>
+        </ul>
+    </div>
+</aside>
+
+<!-- ======================================================================
+     MAIN CONTENT
+     ====================================================================== -->
+<div class="page-wrapper">
+    <main class="main-content">
+        <div class="content-container">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>API Reference <span class="todo-marker">&#9888; WIP</span></h1>
+                <p class="page-subtitle">
+                    REST API reference for Granite-IAM. This page is a placeholder and will be populated
+                    as endpoints are implemented. For live interactive documentation, use the built-in
+                    Swagger UI when the application is running.
+                </p>
+            </div>
+
+            <!-- Overview -->
+            <h2 id="overview">Overview</h2>
+
+            <div class="alert alert-info">
+                <p>&#128161; <strong>Live Documentation:</strong> When the application is running, visit
+                <a href="http://localhost:8080/swagger-ui.html" target="_blank"><code>http://localhost:8080/swagger-ui.html</code></a>
+                for the full interactive OpenAPI documentation powered by SpringDoc.</p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Base URL</strong></td>
+                        <td><code>http://localhost:8080/api/v1</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Protocol</strong></td>
+                        <td>HTTP / HTTPS (production)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Content Type</strong></td>
+                        <td><code>application/json</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Authentication</strong></td>
+                        <td>Bearer Token (JWT)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>OpenAPI Spec</strong></td>
+                        <td><code>/v3/api-docs</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Authentication -->
+            <h2 id="authentication">Authentication</h2>
+            <p>
+                Granite-IAM uses <strong>JWT Bearer tokens</strong> for authentication. Include the token
+                in the <code>Authorization</code> header of every request:
+            </p>
+
+<pre><code>Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...</code></pre>
+
+            <h3>Obtaining a Token</h3>
+            <div class="alert alert-warning">
+                <p>&#9888;&#65039; <strong>Not yet implemented.</strong> The authentication endpoint (<code>POST /api/v1/auth/login</code>)
+                is planned but not yet available. Token issuance will be handled by the Auth Controller.</p>
+            </div>
+
+            <h3>Planned Auth Endpoints <span class="todo-marker">&#9888; TODO</span></h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                        <th>Auth</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="tag tag-success">POST</span></td>
+                        <td><code>/api/v1/auth/login</code></td>
+                        <td>Authenticate and receive JWT token</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-success">POST</span></td>
+                        <td><code>/api/v1/auth/refresh</code></td>
+                        <td>Refresh an expired token</td>
+                        <td>Bearer</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-danger">POST</span></td>
+                        <td><code>/api/v1/auth/logout</code></td>
+                        <td>Revoke the current token</td>
+                        <td>Bearer</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Users API -->
+            <h2 id="users">Users API <span class="todo-marker">&#9888; TODO</span></h2>
+            <p>
+                The Users API provides CRUD operations for managing user accounts.
+                All endpoints require authentication unless otherwise noted.
+            </p>
+
+            <h3>Planned Endpoints</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                        <th>Auth</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="tag tag-primary">GET</span></td>
+                        <td><code>/api/v1/users</code></td>
+                        <td>List all users (paginated)</td>
+                        <td>Admin</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-primary">GET</span></td>
+                        <td><code>/api/v1/users/{id}</code></td>
+                        <td>Get user by ID</td>
+                        <td>Bearer</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-success">POST</span></td>
+                        <td><code>/api/v1/users</code></td>
+                        <td>Create a new user</td>
+                        <td>Admin</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-warning">PUT</span></td>
+                        <td><code>/api/v1/users/{id}</code></td>
+                        <td>Update user details</td>
+                        <td>Bearer</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-danger">DELETE</span></td>
+                        <td><code>/api/v1/users/{id}</code></td>
+                        <td>Deactivate a user (soft delete)</td>
+                        <td>Admin</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Example: Create User <span class="todo-marker">&#9888; TODO</span></h3>
+<pre><code>// Request
+POST /api/v1/users
+Content-Type: application/json
+Authorization: Bearer &lt;token&gt;
+
+{
+    "username": "johndoe",
+    "password": "securePassword123!",
+    "firstName": "John",
+    "lastName": "Doe"
+}
+
+// Response 201 Created
+{
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "username": "johndoe",
+    "firstName": "John",
+    "lastName": "Doe",
+    "active": true,
+    "createdAt": "2026-01-15T10:30:00Z",
+    "updatedAt": "2026-01-15T10:30:00Z"
+}</code></pre>
+
+            <!-- Roles API -->
+            <h2 id="roles">Roles API <span class="todo-marker">&#9888; TODO</span></h2>
+            <p>
+                The Roles API manages role definitions and role-to-user assignments.
+                <strong>Not yet implemented</strong> — the <code>Role</code> domain entity
+                is planned for a future release.
+            </p>
+
+            <h3>Planned Endpoints</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="tag tag-primary">GET</span></td>
+                        <td><code>/api/v1/roles</code></td>
+                        <td>List all roles</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-success">POST</span></td>
+                        <td><code>/api/v1/roles</code></td>
+                        <td>Create a new role</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-success">POST</span></td>
+                        <td><code>/api/v1/users/{id}/roles</code></td>
+                        <td>Assign role to user</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-danger">DELETE</span></td>
+                        <td><code>/api/v1/users/{id}/roles/{roleId}</code></td>
+                        <td>Remove role from user</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Error Handling -->
+            <h2 id="errors">Error Handling</h2>
+            <p>
+                The API uses standard HTTP status codes and returns structured error responses
+                in a consistent format.
+            </p>
+
+            <h3>Error Response Format</h3>
+<pre><code>{
+    "timestamp": "2026-01-15T10:30:00Z",
+    "status": 404,
+    "error": "Not Found",
+    "message": "User not found with id: 550e8400-e29b-41d4-a716-446655440000",
+    "path": "/api/v1/users/550e8400-e29b-41d4-a716-446655440000"
+}</code></pre>
+
+            <h3>Standard Status Codes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Meaning</th>
+                        <th>When</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>200</code></td>
+                        <td>OK</td>
+                        <td>Successful GET, PUT, DELETE</td>
+                    </tr>
+                    <tr>
+                        <td><code>201</code></td>
+                        <td>Created</td>
+                        <td>Successful POST (resource created)</td>
+                    </tr>
+                    <tr>
+                        <td><code>400</code></td>
+                        <td>Bad Request</td>
+                        <td>Invalid request body or parameters</td>
+                    </tr>
+                    <tr>
+                        <td><code>401</code></td>
+                        <td>Unauthorized</td>
+                        <td>Missing or invalid JWT token</td>
+                    </tr>
+                    <tr>
+                        <td><code>403</code></td>
+                        <td>Forbidden</td>
+                        <td>Insufficient permissions (wrong role)</td>
+                    </tr>
+                    <tr>
+                        <td><code>404</code></td>
+                        <td>Not Found</td>
+                        <td>Resource does not exist</td>
+                    </tr>
+                    <tr>
+                        <td><code>409</code></td>
+                        <td>Conflict</td>
+                        <td>Duplicate username or resource conflict</td>
+                    </tr>
+                    <tr>
+                        <td><code>500</code></td>
+                        <td>Internal Server Error</td>
+                        <td>Unexpected server error</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Actuator Endpoints -->
+            <h2>Actuator &amp; Monitoring Endpoints</h2>
+            <p>
+                Spring Boot Actuator exposes operational endpoints for health checks, metrics,
+                and application management.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Endpoint</th>
+                        <th>Method</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>/actuator/health</code></td>
+                        <td>GET</td>
+                        <td>Application health status</td>
+                    </tr>
+                    <tr>
+                        <td><code>/actuator/info</code></td>
+                        <td>GET</td>
+                        <td>Application info</td>
+                    </tr>
+                    <tr>
+                        <td><code>/actuator/prometheus</code></td>
+                        <td>GET</td>
+                        <td>Prometheus metrics export</td>
+                    </tr>
+                    <tr>
+                        <td><code>/actuator/metrics</code></td>
+                        <td>GET</td>
+                        <td>All application metrics</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-info">
+                <p>&#128161; <strong>Production Note:</strong> In production, actuator endpoints should be secured
+                and only expose <code>health</code> and <code>prometheus</code> publicly. Configure
+                <code>management.endpoints.web.exposure.include</code> in <code>application.yaml</code>.</p>
+            </div>
+
+            <!-- Prev / Next -->
+            <nav class="page-nav">
+                <a href="setup.html">
+                    <span class="nav-label">&#8592; Previous</span>
+                    <span class="nav-title">Local Setup</span>
+                </a>
+                <a href="index.html">
+                    <span class="nav-label">Home &#8594;</span>
+                    <span class="nav-title">Overview</span>
+                </a>
+            </nav>
+
+            <!-- Footer -->
+            <footer class="page-footer">
+                <p>Granite-IAM v1.0.0 &middot; Built with &#9829; by <a href="#">lelisay</a> &middot; <a href="https://github.com/your-org/Granite-IAM" target="_blank" rel="noopener">GitHub</a></p>
+            </footer>
+
+        </div>
+    </main>
+</div>
+
+<script src="assets/script.js"></script>
+</body>
+</html>
