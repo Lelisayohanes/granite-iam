@@ -1,12 +1,29 @@
 plugins {
-	id 'java'
+	id 'org.springframework.boot' version '3.2.0' apply false
+	id 'io.spring.dependency-management' version '1.1.6' apply false
 }
 
 allprojects {
 	group = 'com.lelisay'
-	version = '0.0.1'
+	version = '1.0.0'
 
 	repositories {
 		mavenCentral()
+	}
+}
+
+subprojects {
+
+	apply plugin: 'java'
+	apply plugin: 'java-library'
+
+	java {
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(21)
+		}
+	}
+
+	tasks.withType(Test).configureEach {
+		useJUnitPlatform()
 	}
 }

@@ -1,12 +1,7 @@
 plugins {
-    id 'java-library'
+    id 'java'
 }
 
-group = 'com.lelisay'
-version = '1.0.0'
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+dependencies {
+    // pure domain module → NO spring, NO bootJar
 }

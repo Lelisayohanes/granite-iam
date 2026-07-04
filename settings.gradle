@@ -1,4 +1,8 @@
 rootProject.name = 'Granite-IAM'
 
-include 'granite-iam-core'
-include 'granite-iam-web'
+include(
+        "granite-iam-core",
+        "granite-iam-application",
+        "granite-iam-infrastructure",
+        "granite-iam-web"
+)
